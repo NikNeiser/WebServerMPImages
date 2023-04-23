@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Content\**" />
+    <Content Remove="Content\**" />
+    <EmbeddedResource Remove="Content\**" />
+    <None Remove="Content\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Content\Images\" />
+    <Folder Include="wwwroot\Content\Preview\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Content\Preview\10dd0ac9-a706-4889-8e36-14a5b2a17407.webp" />
+    <None Include="wwwroot\Content\Preview\2fc83cfe-da50-411b-8062-ac1a3aaf014e.webp" />
+    <None Include="wwwroot\Content\Preview\57869f95-6841-4358-924b-b577ad81fdce.webp" />
+    <None Include="wwwroot\Content\Preview\9b1a5ea0-7d3e-40c4-9aef-aa640c0fc50b.webp" />
+    <None Include="wwwroot\Content\Preview\c3034b7f-d5ad-49a7-a153-bfe4f739a714.webp" />
+    <None Include="wwwroot\Content\Preview\cfc59619-085b-4cbf-aaaa-875ec6e9cbdd.webp" />
+    <None Include="wwwroot\Content\Preview\fe64b6e5-e963-4174-a76f-7d9e30a96fd9.webp" />
+  </ItemGroup>
+
+</Project>

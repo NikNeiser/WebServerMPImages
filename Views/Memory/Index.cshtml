@@ -1,0 +1,32 @@
+﻿@model WebServerMPImages.Models.ViewModels.MemoryVM
+
+<link rel="stylesheet" href="~/css/PieCharts.css" asp-append-version="true" />
+
+@{
+    var extraFiles = Model.ImagesInDir - Model.ImagesInDB;
+}
+
+<div class="wrapper">  
+  <div class="pie-charts">
+    <div class="pieID--micro-skills pie-chart--wrapper">
+      <h2>Trash Images</h2>
+      <div class="pie-chart">
+        <div class="pie-chart__pie"></div>
+        <ul class="pie-chart__legend">
+          <li><em>files in DB</em><span>@Model.ImagesInDB</span></li>
+          <li><em>needless files in Dir</em><span>@extraFiles</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    <p class="text">
+        In main dir @Model.ImagesInDir images<br/>Full size @Model.ImagesSize
+    </p>
+    <a asp-action="Delete" class="btn btn-info mx-4">
+		Clear Dir
+	</a>
+</div>
+
+@section Scripts{
+    <script src="~/js/PieCharts.js"></script>
+}

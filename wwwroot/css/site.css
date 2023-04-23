@@ -1,0 +1,30 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+img[disabled] {
+    opacity: 0.2;
+}
+
+.recoverbutton{
+    z-index:1;
+}
+
+.recoverbutton[disabled] {
+    visibility: hidden;
+}

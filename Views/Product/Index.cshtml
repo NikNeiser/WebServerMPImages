@@ -1,0 +1,93 @@
+﻿@model WebServerMPImages.Models.ViewModels.FullDbVM
+
+<div class="row pt-4">
+	<div class="col-6">
+		<h2 class="text-primary">Brand List</h2>
+	</div>
+	<div class="col-6 text-right">
+		<a asp-controller="Brand" asp-action="Upsert" class="btn btn-primary">
+			Insert new brand
+		</a>
+	</div>
+</div>
+
+@if (Model.Brands.Count()>0){
+	<table class="table table-bordered table-striped" style="width:100%">
+		<thead>
+			<tr>
+				<th>
+					Name
+				</th>
+				<th>
+					Type
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var brand in Model.Brands){
+				<tr>
+					<th style="width:50%">@brand.Name</th>
+					<th style="width:50%">@brand.BrandType.ToString()</th>
+					<td class="text-center">
+						<div class="w-75 btn-group" role="group">
+							<a asp-route-Id="@brand.Id" asp-controller="Brand" asp-action="Upsert" class="btn btn-primary mx-2">
+								Edit
+							</a>
+							<a asp-route-Id="@brand.Id" asp-controller="Brand" asp-action="Delete" class="btn btn-danger mx-4">
+								Delete
+							</a>
+						</div>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+<br/>
+
+<div class="container">
+	<div class="row pt-4">
+		<div class="col-6">
+			<h2 class="text-primary">Product List</h2>
+		</div>
+		<div class="col-6 text-right">
+			<a asp-action="Upsert" class="btn btn-primary">
+				Insert new Product
+			</a>
+		</div>
+	</div>
+</div>
+
+@if (Model.Products.Count()>0){
+	@foreach(var product in Model.Products){
+	<div class="container">
+		<div class="row justify-content-between text-primary-emphasis bg-primary bg-opacity-10 rounded-3 p-1 my-3">
+			<div class="col-auto mt-2">
+				<p class="productinfo py-auto"><b>@product.Brand.Name @product.Taste</b> @product.PackType @product.Volume ml</p>
+			</div>
+			<div class="col-auto">
+				<a asp-route-Id="@product.Id" asp-controller="Product" asp-action="Upsert" class="btn btn-primary m-1">
+					Edit
+				</a>
+				<a asp-route-Id="@product.Id" asp-controller="Product" asp-action="Delete" class="deletebutton btn btn-danger m-1">
+					Delete
+				</a>
+			</div>
+		</div>
+		<div class="row ">
+			@foreach(var photo in product.Photos)
+			{
+				<div class="col">
+					<img src="@String.Concat(WebConst.previewImagePath,photo.Name,WebConst.previewImageFormat)" height="250"/>
+				</div>
+			}
+		</div>
+	</div>
+	}
+}
+
+@section Scripts{
+	<script src="~/js/productIndex.js"></script>
+}

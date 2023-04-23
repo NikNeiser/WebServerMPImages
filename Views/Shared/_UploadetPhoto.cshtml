@@ -1,0 +1,22 @@
+﻿@model IEnumerable<WebServerMPImages.Models.ProductPhoto>
+
+@if(Model != null)
+{    
+    @foreach(var photo in Model)
+    {    
+        <div class="col col-3 p-1" >
+            <div class="updatePhoto col bg-light border rounded-3 p-2" id="@photo.Name">
+                <button type="button" class="recoverbutton position-relative top-50 start-50 translate-middle btn-info" disabled>Recover</button>
+                <button type="button" class="closebutton btn-close btn-danger float-end" aria-label="Close"></button>
+		        <img src="@String.Concat(WebConst.previewImagePath,photo.Name,WebConst.previewImageFormat)" class="mb-2 mx-auto d-block" height="250"/>
+                
+                <select asp-for="@photo.PhotoType" asp-items="Html.GetEnumSelectList<PhotoType>()" class="form-control w-auto mx-auto mb-2">
+                    <option selected disabled>--Select Category--</option>
+                </select>
+	        </div>
+        </div>
+    }
+}
+
+
+

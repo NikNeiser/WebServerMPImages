@@ -1,0 +1,21 @@
+﻿@model IQueryable<IGrouping<Brand, Product>>
+
+<div class="container">
+    @foreach(var group in Model)
+    {
+        <h4 class="text-center">@group.Key.Name</h4>
+        <div class="row">
+            @foreach(var prod in group)
+            {                
+                <div class="col col-3 bg-light border rounded-3 p-2">
+                    <a href="#" class="image-popup" title="Screenshot-1">
+                        <img src="@String.Concat(WebConst.previewImagePath,prod.Photos[0].Name,WebConst.previewImageFormat)" class="thumb-img" alt="work-thumbnail">
+                    </a>
+                    <h4 class="text-center">@prod.Taste</h4>
+                    <div class="ga-border"></div>
+                    <p class="text-muted text-center"><small>@prod.PackType @prod.Volume</small></p>            
+                </div>
+            }         
+        </div>
+    }
+</div>

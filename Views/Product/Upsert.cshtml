@@ -1,0 +1,113 @@
+﻿@model WebServerMPImages.Models.ViewModels.ProductVM
+
+@{
+	var title = "Create new product";
+}
+
+<form method="post" enctype="multipart/form-data" id="form">
+	@if (Model.Product.Id != 0)
+	{
+		title = "Edit product";
+		<input asp-for="@Model.Product.Id" hidden/>
+	}
+	<div class="border p-3">
+		<div class="form-group row">
+			<h2 class="text-info pl-3">@title</h2>
+		</div>
+		<div class="row">
+			<div class="col-8 mb-2">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model.Product.BrandId"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="@Model.Product.BrandId" asp-items="@Model.BrandsDropDown" class="form-control">
+                            <option selected disabled>--Select Brand--</option>
+                        </select>
+                        <span asp-validation-for="@Model.Product.BrandId" class="text-danger"></span>
+                    </div>
+                </div>
+
+				<div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model.Product.Taste"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model.Product.Taste" class="form-control"/>
+                        <span asp-validation-for="@Model.Product.Taste" class="text-danger"></span>
+                    </div>
+                </div>
+
+				<div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model.Product.PackType"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="@Model.Product.PackType" asp-items="Html.GetEnumSelectList<PackType>()" class="form-control">
+                            <option selected disabled>--Select Category--</option>
+                        </select>
+                        <span asp-validation-for="@Model.Product.PackType" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model.Product.Volume"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model.Product.Volume" class="form-control"/>
+                        <span asp-validation-for="@Model.Product.Volume" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model.Product.Barcode"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model.Product.Barcode" class="form-control"/>
+                        <span asp-validation-for="@Model.Product.Barcode" class="text-danger"></span>
+                    </div>
+                </div>
+			</div>
+
+            <div class="form-group row">
+                @await Html.PartialAsync("_UploadetPhoto", @Model.Product.Photos)
+            </div>
+
+            <div id="UploadImageResult" class="form-group row"></div>  
+
+
+            <div class="form-group  text-center">
+		        <div class="custom-file">
+			        <input type="file" id="fileUpload" class="fileUpload" multiple="multiple">
+			        @*<button type="button" id="btnUpload" class="btn btn-success">Upload</button>*@
+		        </div>
+	        </div>
+            
+            <div class="form-group row">
+                <div class="col-8 row">
+                    <div class="col">
+                        @if (Model.Product.Id != 0)
+                        {
+                            //update
+                            <input type="submit" class="btn btn-primary w-100" value="Update"/>
+                        }
+                        else
+                        {
+                            <input type="submit" class="btn btn-primary w-100" value="Create"/>
+                        }
+                    </div>
+                    <div class="col">
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-info w-100">Back</a>
+                    </div>
+                </div>
+            </div>
+		</div>
+
+	</div>
+</form>
+@section Scripts{
+    <script src="~/js/updateImages.js"></script>
+}
+
