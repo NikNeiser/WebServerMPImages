@@ -25,6 +25,13 @@ namespace WebServerMPImages.Controllers
             return View(productsGroup);
         }
 
+        [HttpPost]
+        [ActionName("Index")]
+        public IActionResult IndexPost()
+        {
+            return View();
+        }
+
 
     }
 }
