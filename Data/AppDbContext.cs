@@ -12,7 +12,7 @@ namespace WebServerMPImages.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Brand> Brands { get; set; }
-
+        public DbSet<ImageParametersPreset> Presets { get; set; }
         public DbSet<ProductPhoto> ProductPhoto { get; set; }
     }
 }
