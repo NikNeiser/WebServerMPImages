@@ -1,16 +1,10 @@
-﻿using SixLabors.ImageSharp;
+﻿using WebServerMPImages.Models.Images;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using SixLabors.ImageSharp;
 
 namespace WebServerMPImages.Services
-{
-    using WebServerMPImages.Models.Images;
-    //using ImageProcessor;
-    using System.IO;
-    using Microsoft.AspNetCore.Hosting;
-
-    //using ImageProcessor.Imaging.Formats;
-    //using ImageProcessor.Plugins.WebP.Imaging.Formats;
-
-
+{    
     public class ImageService : IImageService
     {
         private readonly IWebHostEnvironment webHostEnviroment;
@@ -21,34 +15,33 @@ namespace WebServerMPImages.Services
             wwwrootpath = webHostEnviroment.WebRootPath;
         }
 
-        public IEnumerable<string> ProcessImages(IEnumerable<ImageInputModel> images)
+        public async Task<IEnumerable<string>> ProcessImages(IEnumerable<ImageInputModel> images)
         {   
             List<string> result = new List<string>();
 
             foreach (var image in images)
             {
-                result.Add(SaveImageImageSharp(image));
+                result.Add(await SaveImage(image));
             }
             return result;
         }
 
-        private string SaveImageImageSharp(ImageInputModel imageInput)
+        private async Task<string> SaveImage(ImageInputModel imageInput)
         {
             string imageName = GetTempName();
-            using var image = Image.Load(imageInput.Content);
+            using var image = await Image.LoadAsync(imageInput.Content);
             image.Mutate(i => i.EntropyCrop(WebConst.threshold));
             image.Metadata.ExifProfile = null;
-            image.SaveAsWebp(GetImageOriginalPath(imageName));
-
+            await image.SaveAsWebpAsync(GetImageOriginalPath(imageName));
 
             image.Mutate(i => i.Resize(new ResizeOptions
             {
                 Mode = ResizeMode.Pad,
                 PremultiplyAlpha = true,
-                Size = new Size(200, 300),
+                Size = WebConst.previewImageSize,
             }));
 
-            image.SaveAsWebp(GetImagePreviewPath(imageName));
+            await image.SaveAsWebpAsync(GetImagePreviewPath(imageName));
             return imageName;
         }
 
@@ -56,15 +49,16 @@ namespace WebServerMPImages.Services
         {
             foreach (var photo in photoToDelete)
             {
-                if (File.Exists(GetImagePreviewPath(photo)))
-                {
-                    File.Delete(GetImagePreviewPath(photo));
-                }
+                DeleteIfExist(GetImagePreviewPath(photo));
+                DeleteIfExist(GetImageOriginalPath(photo));
+            }
+        }
 
-                if (File.Exists(GetImageOriginalPath(photo)))
-                {
-                    File.Delete(GetImageOriginalPath(photo));
-                }
+        private void DeleteIfExist(string path)
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
             }
         }
 

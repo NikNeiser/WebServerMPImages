@@ -2,11 +2,12 @@
 {
     public static class WebConst
     {
-        public static string imagePath = @"/Content/Images/";
-        public static string previewImagePath = @"/Content/Preview/";
-        public static string previewImageFormat = ".webp";
-        public static float threshold = 0.5F;
-        public static string tmpPrefix = "tmp_";
+        public const string imagePath = @"/Content/Images/";
+        public const string previewImagePath = @"/Content/Preview/";
+        public const string previewImageFormat = ".webp";
+        public const float threshold = 0.5F;
+        public const string tmpPrefix = "tmp_";
+        public static Size previewImageSize = new Size(200, 300);
         public static IEnumerable<string> ImagePaths { 
             get {
                 yield return imagePath;

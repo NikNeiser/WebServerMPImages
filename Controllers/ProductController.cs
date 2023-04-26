@@ -23,7 +23,7 @@
 
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             FullDbVM fullDbVM = new FullDbVM
             {
@@ -31,7 +31,7 @@
                 //Products = from p in _db.Products
                 //           orderby p.BrandId, p.Taste, p.Volume
                 //           select p
-                Products = _db.Products.Include(u => u.Photos.OrderBy(p => p.PhotoType)).OrderBy(u => u.BrandId)
+                Products = await _db.Products.Include(u => u.Photos.OrderBy(p => p.PhotoType)).OrderBy(u => u.BrandId).ToListAsync()
             };
             return View(fullDbVM);
         }
@@ -56,7 +56,7 @@
         }
 
         [HttpPost]
-        public IActionResult Upsert(ProductVM productVM, IEnumerable<string>? allPhotos, IEnumerable<string>? photoToDelete)
+        public async Task<IActionResult> Upsert(ProductVM productVM, IEnumerable<string>? allPhotos, IEnumerable<string>? photoToDelete)
         {
 
             //var newPhotos = new List<ProductPhoto>();
@@ -76,17 +76,24 @@
             }
             else
             {
-                var product = _db.Products.Include(u => u.Photos.OrderBy(p => p.PhotoType)).FirstOrDefault(i => i.Id == productVM.Product.Id);
-                List<ProductPhoto> currentPhotos = product.Photos ?? new List<ProductPhoto>();
+                var currentProduct = _db.Products.Include(u => u.Photos.OrderBy(p => p.PhotoType))
+                    .FirstOrDefault(i => i.Id == productVM.Product.Id);
 
-                Type type = product.GetType();
+                if (currentProduct.Photos == null)
+                    currentProduct.Photos = new List<ProductPhoto>();
+
+                List<ProductPhoto> currentPhotos = currentProduct.Photos;
+
+                //Update product properties
+                Type type = currentProduct.GetType();
                 PropertyInfo[] properties = type.GetProperties();
                 foreach (PropertyInfo property in properties)
                 {
-                    property.SetValue(product, property.GetValue(productVM.Product) ?? property.GetValue(product));
+                    property.SetValue(currentProduct, property.GetValue(productVM.Product) ?? property.GetValue(currentProduct));
                 }
 
-                foreach(var p in newPhotos.OrEmptyIfNull())
+
+                foreach(var p in newPhotos.EmptyIfNull())
                 {
                     if(currentPhotos.Any(i => i.Name == p.Name))
                     {
@@ -99,7 +106,7 @@
                     }
                 }
 
-                foreach(var p in photoToDelete.OrEmptyIfNull())
+                foreach(var p in photoToDelete.EmptyIfNull())
                 {
                     if (currentPhotos.Any(i => i.Name == p))
                     {
@@ -109,9 +116,10 @@
                 }                
             }
 
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
-            if (photoToDelete!=null && photoToDelete.Count()>0) _imageService.RemoveImages(photoToDelete);
+            if (photoToDelete!=null && photoToDelete.Count()>0)
+                _imageService.RemoveImages(photoToDelete);
 
             return RedirectToAction(nameof(this.Index));
             
@@ -125,7 +133,7 @@
 
             var currentPhotos = product.Photos;
 
-            foreach(var p in currentPhotos.OrEmptyIfNull())
+            foreach(var p in currentPhotos.EmptyIfNull())
             {
                 _db.ProductPhoto.Remove(p);
             }
@@ -138,11 +146,11 @@
         }
 
         [HttpPost]
-        public IActionResult UploadNewImages(IFormFile[] images)
+        public async Task<IActionResult> UploadNewImages(IFormFile[] images)
         {
             if (images.Length > 0)
             {
-                IEnumerable<string> newImages = this._imageService
+                IEnumerable<string> newImages = await this._imageService
                     .ProcessImages(images.Select(i => new Models.Images.ImageInputModel
                     {
                         Name = Path.GetFileNameWithoutExtension(i.FileName),
