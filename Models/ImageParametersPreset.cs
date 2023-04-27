@@ -21,6 +21,11 @@ namespace WebServerMPImages.Models
         public Color BackgroundColor { get => backgroundColor; set => backgroundColor = value; }
         public int BGColor { get => backgroundColor.ToArgb(); set => backgroundColor = Color.FromArgb(value); }
         public ImageExtension Extension { get; set; } = ImageExtension.png;
+
+        public ImageParametersPreset()
+        {
+            PresetName = "None";
+        }
     }
 
 }
