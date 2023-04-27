@@ -27,10 +27,14 @@ namespace WebServerMPImages.Controllers
 
         [HttpPost]
         [ActionName("Index")]
-        public IActionResult IndexPost()
+        public IActionResult IndexPost(IEnumerable<string> imageNames, ImageParametersPreset preset)
         {
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPresets() => Ok( await _db.Presets.ToListAsync());
+
 
 
     }
