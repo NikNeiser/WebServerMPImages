@@ -1,0 +1,68 @@
+.mainImages {
+  height: 90vh;
+}
+
+.cartImages {
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
+.content {
+  height: 2000px;
+}
+
+.cartImage {
+  border: none;
+}
+
+.mainImage img {
+  max-height: 300px;
+  max-width: 200px;
+}
+
+.opened .cover {
+  display: none;
+}
+
+.closed .openImages {
+  display: none;
+}
+
+.closed .close {
+  display: none;
+}
+
+.image.selected {
+  border: solid skyblue;
+}
+
+.mainCont.selected {
+  border: solid skyblue;
+}
+
+button.image:focus {
+  box-shadow: none;
+}
+
+button.image:active {
+  box-shadow: none;
+}
+.cartImage {
+  position: relative;
+}
+.deleteBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 17%;
+  height: 17%;
+  padding: 2px;
+  line-height: 0;
+}
+.deleteBtn svg {
+  fill: white;
+}
+
+#blank {
+  display: none;
+}

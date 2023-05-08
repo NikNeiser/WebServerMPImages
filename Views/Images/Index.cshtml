@@ -1,21 +1,92 @@
 ﻿@model IQueryable<IGrouping<Brand, Product>>
 
-<div class="container">
-    @foreach(var group in Model)
-    {
-        <h4 class="text-center">@group.Key.Name</h4>
-        <div class="row">
-            @foreach(var prod in group)
-            {                
-                <div class="col col-3 bg-light border rounded-3 p-2">
-                    <a href="#" class="image-popup" title="Screenshot-1">
-                        <img src="@String.Concat(WebConst.previewImagePath,prod.Photos[0].Name,WebConst.previewImageFormat)" class="thumb-img" alt="work-thumbnail">
-                    </a>
-                    <h4 class="text-center">@prod.Taste</h4>
-                    <div class="ga-border"></div>
-                    <p class="text-muted text-center"><small>@prod.PackType @prod.Volume</small></p>            
-                </div>
-            }         
+<link rel="stylesheet" href="~/css/mainpaige.css" asp-append-version="true" />
+
+<div class="container-fluid">
+    <div class="row py-3">
+        <div class="col-9 content row">
+            <div class="mainImages">
+                @foreach (var group in Model)
+                {                    
+                    <h4 class="text-left">@group.Key.Name</h4>
+                    <div class="row">
+                        @foreach (var prod in group)
+                        {                            
+                            <div class="mainCont closed col col-6 col-md-2 col-sm-3">
+                                <div class="imageCont bg-light border rounded-3 p-2">
+                                    <button class="btn btn-info close mb-2">
+                                        <svg viewBox="-100.9 99.1 61.9 105.9"
+                                             style="width: 7px; margin-right: 4px">
+                                            <path d="m-98.2 158.8 43.5 43.5c1.7 1.7 4 2.7 6.5 2.7s4.8-1 6.5-2.7c1.7-1.7 2.7-4 2.7-6.5s-1-4.8-2.7-6.5l-37.2-37.2 37.2-37.2c1.7-1.7 2.7-4 2.7-6.5s-1-4.8-2.6-6.5c-1.8-1.9-4.2-2.8-6.6-2.8-2.3 0-4.6.9-6.5 2.6-11.5 11.4-41.2 41-43.3 43l-.2.2c-3.6 3.6-3.6 10.3 0 13.9z"></path>
+                                        </svg>
+                                    </button>
+
+                                    <button class="btn cover">
+                                        <img src="@String.Concat(WebConst.previewImagePath,prod.Photos[0].Name,WebConst.previewImageFormat)"
+                                             class="mx-auto d-block h-100 w-100" />
+                                    </button>
+                                    @foreach(var photo in prod.Photos)
+                                    {                                        
+                                        <div class="openImages col col-6 col-md-2 col-sm-3">
+                                            <button id="@photo.Name"
+                                                    class="image btn">
+                                                <img src="@String.Concat(WebConst.previewImagePath,photo.Name,WebConst.previewImageFormat)"
+                                                     class="mx-auto d-block h-100 w-100" />
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+                                <p class="text-muted text-center">
+                                    <strong>@prod.Taste</strong>
+                                    <small>@prod.PackType @prod.Volume</small>
+                                </p>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
         </div>
-    }
+        <div class="col-3">
+            <div class="sticky-top mt-1 p-3 bg-light">
+                <div class="menu">
+                    <h5 class="text-primary">Sticky menu</h5>
+                    <form method="post" enctype="multipart/form-data" id="form">
+                        <div id="cart" class="cartImages row">
+                            <div id="blank" class="cartImage col-6 col-lg-4">
+                                <button class="deleteBtn btn btn-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         viewBox="0 0 448 512"
+                                         aria-hidden="true"
+                                         focusable="false">                                        
+                                        <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
+                                    </svg>
+                                </button>
+                                <img src="" class="mx-auto d-block h-100 w-100" />
+                                <input type="text" name="photos" value="" hidden />
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="row">
+                                <div class="form-group row">
+
+                                <div class="form-group row">
+                                    <div class="col-8 row">
+                                        <div class="col">
+                                            <input type="submit"
+                                                   class="btn btn-primary w-100"
+                                                   value="Load" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts{
+    <script src="~/js/mainpage.js"></script>
+}
