@@ -12,14 +12,14 @@ namespace WebServerMPImages.Models
         [Key]
         public string PresetName { get; set; }
         [NotMapped]
-        public Size Size => new Size(Width, Height);
+        public Size Size => new Size(Width,Height);
         public int Width { get; set; }
         public int Height { get; set; }
         public bool NameByBarcode { get; set; } = false;
         public bool TransparentBG { get; set; } = true;
         [NotMapped]
         public Color BackgroundColor { get => backgroundColor; set => backgroundColor = value; }
-        public int BGColor { get => backgroundColor.ToArgb(); set => backgroundColor = Color.FromArgb(value); }
+        public string BGColor { get => backgroundColor.ToHex(); set => backgroundColor = ColorTranslator.FromHtml(value); }
         public ImageExtension Extension { get; set; } = ImageExtension.png;
 
         public ImageParametersPreset()
