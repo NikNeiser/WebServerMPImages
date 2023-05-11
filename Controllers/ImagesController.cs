@@ -7,6 +7,8 @@ namespace WebServerMPImages.Controllers
     using WebServerMPImages.Models;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
+    using WebServerMPImages.Models.ViewModels;
+    using System.Text.Json;
 
     public class ImagesController : Controller
     {
@@ -21,8 +23,12 @@ namespace WebServerMPImages.Controllers
 
         public IActionResult Index()
         {
-            var productsGroup = _db.Products.Include(u=> u.Brand).Include(u => u.Photos.OrderBy(p => p.PhotoType)).GroupBy(u => u.Brand);
-            return View(productsGroup);
+            var imagesVM = new ImagesVM
+            {
+                ImagesGroup = _db.Products.Include(u => u.Brand).Include(u => u.Photos.OrderBy(p => p.PhotoType)).GroupBy(u => u.Brand),
+                Presets = JsonSerializer.Serialize(_db.Presets.ToList())
+            }; 
+             return View(imagesVM);
         }
 
         [HttpPost]

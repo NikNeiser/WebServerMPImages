@@ -7,10 +7,6 @@
   overflow-y: scroll;
 }
 
-.content {
-  height: 2000px;
-}
-
 .cartImage {
   border: none;
 }
@@ -65,4 +61,12 @@ button.image:active {
 
 #blank {
   display: none;
+}
+
+.form-group label {
+    line-height: 1;
+}
+
+.form-group input[disabled] {
+    opacity: 50%;
 }

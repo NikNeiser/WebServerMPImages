@@ -51,6 +51,38 @@ var app = (function () {
       var $imageBtn = $("#" + $cartItem.children("input").attr("value"));
       DeselectImage($imageBtn);
     });
+
+      ui.$document.on("change", "#preset-select", function () {
+          
+          if ($(this).val() != "") {
+              var preset = presets.find(obj => { return obj.PresetName === $(this).val() });
+              $("input[name='Width']").val(preset.Width);
+              $("input[name='Height']").val(preset.Height);
+              $("input[name='TransparentBG']").prop('checked', preset.TransparentBG).change();
+              $("input[name='BGColor']").val(preset.BGColor);
+              $("input[name='NameByBarcode']").prop('checked', preset.NameByBarcode);
+              $("select[name='Extension']").val(preset.Extension);
+          }
+      });
+
+      ui.$document.on("change", ".preset-value", function () {
+          $("#preset-select").val("");
+      });
+
+      ui.$document.on("change", "input[name='TransparentBG']", function () {
+
+          if ($(this).is(":checked")) {
+              $(".BGColor").hide(500);
+          } else {
+              $(".BGColor").show(500);
+          }
+      });
+
+      $(ui.$cart).on('DOMSubtreeModified', function () {
+          var cartIsEmpty = ui.$cart.find(".cartImage").length < 2;
+          $("#loadBtn").prop('disabled', cartIsEmpty);          
+      });
+
   }
 
   function SelectImage($btnImage) {
@@ -72,10 +104,21 @@ var app = (function () {
     $(imageCont).toggleClass("row");
   }
 
+    function AddPresets() {
+        $.each(presets, function (i, item) {
+            $('#preset-select').append($('<option>', {
+                value: item.PresetName,
+                text: item.PresetName
+            }));
+        });
+    }
+
   // Инициализация приложения
   function init() {
     // ...
-    _bindHandlers();
+      AddPresets();
+      _bindHandlers();
+
   }
 
   // Возвращаем наружу

@@ -4,20 +4,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace WebServerMPImages.Models
 {
     using System.Drawing;
+    using System.Text.Json.Serialization;
+
     public class ImageParametersPreset
     {
         [NotMapped]
+        [JsonIgnore]
         private Color backgroundColor = Color.White;
 
-        [Key]
+        [Key]        
         public string PresetName { get; set; }
         [NotMapped]
+        [JsonIgnore]
         public Size Size => new Size(Width,Height);
         public int Width { get; set; }
         public int Height { get; set; }
         public bool NameByBarcode { get; set; } = false;
         public bool TransparentBG { get; set; } = true;
         [NotMapped]
+        [JsonIgnore]
         public Color BackgroundColor { get => backgroundColor; set => backgroundColor = value; }
         public string BGColor { get => backgroundColor.ToHex(); set => backgroundColor = ColorTranslator.FromHtml(value); }
         public ImageExtension Extension { get; set; } = ImageExtension.png;
