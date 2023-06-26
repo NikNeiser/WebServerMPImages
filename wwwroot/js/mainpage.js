@@ -83,6 +83,12 @@ var app = (function () {
           $("#loadBtn").prop('disabled', cartIsEmpty);          
       });
 
+      $("#form").submit(function (eventObj) {
+
+
+          return true;
+      });
+
   }
 
   function SelectImage($btnImage) {

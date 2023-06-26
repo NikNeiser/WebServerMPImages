@@ -2,14 +2,15 @@
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using SixLabors.ImageSharp;
+using WebServerMPImages.Models;
 
 namespace WebServerMPImages.Services
 {    
-    public class ImageService : IImageService
+    public class ImageChange : IImageChange
     {
         private readonly IWebHostEnvironment webHostEnviroment;
         private readonly string wwwrootpath; 
-        public ImageService(IWebHostEnvironment webHostEnviroment)
+        public ImageChange(IWebHostEnvironment webHostEnviroment)
         {
             this.webHostEnviroment = webHostEnviroment;
             wwwrootpath = webHostEnviroment.WebRootPath;
@@ -98,6 +99,11 @@ namespace WebServerMPImages.Services
         private string GetImagePath(string path, string name)
         {
             return String.Concat(wwwrootpath, path, name, WebConst.previewImageFormat);
+        }
+
+        public string GetImages(IEnumerable<string> images, ImageParametersPreset preset)
+        {
+            throw new NotImplementedException();
         }
 
         //private void SaveImageImageSharp(ImageInputModel imageInput)

@@ -14,9 +14,9 @@
     public class ProductController : Controller
     {
         private readonly AppDbContext _db;
-        private readonly IImageService _imageService;
+        private readonly IImageChange _imageService;
 
-        public ProductController(AppDbContext db, IImageService imageService)
+        public ProductController(AppDbContext db, IImageChange imageService)
         {
             _db = db;
             _imageService = imageService;

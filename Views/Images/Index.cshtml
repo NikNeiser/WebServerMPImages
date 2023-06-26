@@ -62,7 +62,7 @@
                                     </svg>
                                 </button>
                                 <img src="" class="mx-auto d-block h-100 w-100" />
-                                <input type="text" name="photos" value="" hidden />
+                                <input type="text" name="images" value="" hidden />
                             </div>
                         </div>
                         
@@ -70,7 +70,7 @@
                             <div class="form-group row">
                                 <div class="col-12">
                                     <label>Preset</label>
-                                    <select name="preset" id="preset-select" class="form-control">
+                                <select name="PresetName" id="preset-select" class="form-control">
                                         <option selected value="">None</option>
                                     </select>
                                 </div>
@@ -80,15 +80,15 @@
                                 <div class="col-6">
                                     <label>Width(px)</label>
                                     <input type="number"
-                                           class="preset-value form-control px-2 py-1"
-                                           name="Width"
+                                       class="preset-value form-control px-2 py-1"
+                                       name="Width"
                                        required />
                                 </div>
                                 <div class="col-6">
                                     <label>Height(px)</label>
                                     <input type="number"
                                        class="preset-value form-control px-2 py-1"
-                                           name="Height"
+                                       name="Height"
                                        required />
                                 </div>
                             </div>
@@ -117,11 +117,11 @@
                             <div class="preset-value form-group row">
                                 <div class="col-12">
                                     <label>Image Extantion</label>
-                                    <select asp-items="Html.GetEnumSelectList<ImageExtension>()" class="form-control" name="Extension"></select>
+                                <select asp-items="Html.GetEnumSelectList<ImageExtension>()" class="form-control" name="Extension"></select>
                                 </div>
                             </div>
 
-                            <div class="form-group row align-items-center mt-1">
+                            <div class="preset-value form-group row align-items-center mt-1">
                                 <div class="col-9">
                                 <label>Name By Barcode</label>
                                 </div>
@@ -153,5 +153,4 @@
         var presets = JSON.parse('@Html.Raw(Model.Presets)');        
     </script>
     <script src="~/js/mainpage.js"></script>
-
 }

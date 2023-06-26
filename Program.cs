@@ -9,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IImageService, ImageService>();
+builder.Services.AddTransient<IImageChange, ImageChange>();
+builder.Services.AddTransient<IImageGet, ImageGet>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {

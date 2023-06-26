@@ -9,10 +9,10 @@ namespace WebServerMPImages.Controllers
     public class MemoryController : Controller
     {
         private readonly AppDbContext _db;
-        private readonly IImageService _imageService;
+        private readonly IImageChange _imageService;
         private readonly IWebHostEnvironment _webHostEnviroment;
         private readonly string wwwrootpath;
-        public MemoryController(AppDbContext db, IImageService imageService, IWebHostEnvironment webHostEnviroment)
+        public MemoryController(AppDbContext db, IImageChange imageService, IWebHostEnvironment webHostEnviroment)
         {
             _db = db;
             _imageService = imageService;
