@@ -19,6 +19,7 @@ namespace WebServerMPImages.Models
         public Size Size => new Size(Width,Height);
         public int Width { get; set; }
         public int Height { get; set; }
+        public int Padding { get; set; } = 0;
         public bool NameByBarcode { get; set; } = false;
         public bool TransparentBG { get; set; } = true;
         [NotMapped]

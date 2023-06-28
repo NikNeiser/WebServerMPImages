@@ -58,10 +58,12 @@ var app = (function () {
               var preset = presets.find(obj => { return obj.PresetName === $(this).val() });
               $("input[name='Width']").val(preset.Width);
               $("input[name='Height']").val(preset.Height);
+              $("input[name='Padding']").val(preset.Padding);
               $("input[name='TransparentBG']").prop('checked', preset.TransparentBG).change();
               $("input[name='BGColor']").val(preset.BGColor);
               $("input[name='NameByBarcode']").prop('checked', preset.NameByBarcode);
               $("select[name='Extension']").val(preset.Extension);
+              
           }
       });
 

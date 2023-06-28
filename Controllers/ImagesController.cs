@@ -36,16 +36,17 @@ namespace WebServerMPImages.Controllers
         [ActionName("Index")]
         public IActionResult IndexPost(IEnumerable<string> images)
         {
-            ImageParametersPreset preset = new ImageParametersPreset();
-
-            preset.PresetName = HttpContext.Request.Form["PresetName"];
-            preset.Width = int.Parse(HttpContext.Request.Form["Width"]);
-            preset.Height = int.Parse(HttpContext.Request.Form["Height"]);
-            preset.TransparentBG = !HttpContext.Request.Form["TransparentBG"].IsNullOrEmpty();
-            preset.BGColor = HttpContext.Request.Form["BGColor"];
-            preset.NameByBarcode = !HttpContext.Request.Form["NameByBarcode"].IsNullOrEmpty();
-            preset.Extension = (ImageExtension)int.Parse(HttpContext.Request.Form["Extension"]);
-            
+            ImageParametersPreset preset = new ImageParametersPreset() 
+            {
+                PresetName = HttpContext.Request.Form["PresetName"],
+                Width = int.Parse(HttpContext.Request.Form["Width"]),
+                Height = int.Parse(HttpContext.Request.Form["Height"]),
+                Padding = int.Parse(HttpContext.Request.Form["Padding"]),
+                TransparentBG = !HttpContext.Request.Form["TransparentBG"].IsNullOrEmpty(),
+                BGColor = HttpContext.Request.Form["BGColor"],
+                NameByBarcode = !HttpContext.Request.Form["NameByBarcode"].IsNullOrEmpty(),
+                Extension = (ImageExtension)int.Parse(HttpContext.Request.Form["Extension"]),            
+            };            
 
             imageGetService.GetImages(images, preset);
 
