@@ -8,5 +8,7 @@
         public string Name { get; set; }
 
         public PhotoType PhotoType { get; set; }
+
+        public Product Product { get; set; }
     }
 }

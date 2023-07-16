@@ -14,9 +14,6 @@ namespace WebServerMPImages.Models
 
         [Key]        
         public string PresetName { get; set; }
-        [NotMapped]
-        [JsonIgnore]
-        public Size Size => new Size(Width,Height);
         public int Width { get; set; }
         public int Height { get; set; }
         public int Padding { get; set; } = 0;
