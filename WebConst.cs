@@ -4,6 +4,7 @@
     {
         public const string imagePath = @"/Content/Images/";
         public const string previewImagePath = @"/Content/Preview/";
+        public const string downloadPath = @"\Content\Download\";
         public const string previewImageFormat = ".webp";
         public const float threshold = 0.5F;
         public const string tmpPrefix = "tmp_";

@@ -13,13 +13,11 @@ namespace WebServerMPImages.Controllers
 
     public class ImagesController : Controller
     {
-        private readonly IImageGet imageGetService;
         private readonly AppDbContext _db;
 
-        public ImagesController(AppDbContext db, IImageGet imageGetService)
+        public ImagesController(AppDbContext db)
         {
             _db = db;
-            this.imageGetService = imageGetService;
         }
 
         public IActionResult Index()
@@ -28,13 +26,13 @@ namespace WebServerMPImages.Controllers
             {
                 ImagesGroup = _db.Products.Include(u => u.Brand).Include(u => u.Photos.OrderBy(p => p.PhotoType)).GroupBy(u => u.Brand),
                 Presets = JsonSerializer.Serialize(_db.Presets.ToList())
-            }; 
-             return View(imagesVM);
+            };
+            return View(imagesVM);
         }
 
         [HttpPost]
         [ActionName("Index")]
-        public IActionResult IndexPost(IEnumerable<string> images)
+        public async Task<FileResult> IndexPost([FromServices]IImageGet imageGetService, IEnumerable<string> images)
         {
             ImageParametersPreset preset = new ImageParametersPreset() 
             {
@@ -46,11 +44,13 @@ namespace WebServerMPImages.Controllers
                 BGColor = HttpContext.Request.Form["BGColor"],
                 NameByBarcode = !HttpContext.Request.Form["NameByBarcode"].IsNullOrEmpty(),
                 Extension = (ImageExtension)int.Parse(HttpContext.Request.Form["Extension"]),            
-            };            
+            };
 
-            imageGetService.GetImages(images, preset);
+            var photosDB = _db.ProductPhoto.Include(i => i.Product).Include(i=>i.Product.Brand).Where(i => images.Contains(i.Name));
 
-            return View();
+            string archiveFullName = await imageGetService.GetImages(photosDB, preset);
+
+            return File(archiveFullName,"application/zip");
         }
 
         [HttpGet]

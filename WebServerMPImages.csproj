@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Content\Images\" />
+    <Folder Include="wwwroot\Content\Download\" />
     <Folder Include="wwwroot\Content\Preview\" />
   </ItemGroup>
 

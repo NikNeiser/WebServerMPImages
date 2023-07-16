@@ -4,6 +4,6 @@ namespace WebServerMPImages.Services
 {
     public interface IImageGet
     {
-        public string GetImages(IEnumerable<string> images, ImageParametersPreset preset);
+        public Task<string> GetImages(IEnumerable<ProductPhoto> images, ImageParametersPreset preset);
     }
 }
