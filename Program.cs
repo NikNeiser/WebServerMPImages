@@ -14,7 +14,7 @@ builder.Services.AddTransient<IImageGet, ImageGet>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
+    options.UseNpgsql(builder.Configuration["ConnectionStrings:PostgreSQLConnection"]);
 });
 
 //builder.Services.Configure<MvcViewOptions>(options =>
